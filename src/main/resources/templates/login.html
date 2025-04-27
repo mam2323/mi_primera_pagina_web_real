@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<div th:include="fragments/init.html"></div>
+<title>Inicio</title>
+
+<body>
+<header th:include="fragments/header.html"></header>
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 rounded">
+
+                <h2 class="text-center text-primary mb-4">🔐 Iniciar Sesión</h2>
+
+                <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                    Sesión cerrada correctamente.
+                </div>
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Usuario o contraseña incorrecta.
+                </div>
+
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group mb-3">
+                        <label for="username">👤 Usuario</label>
+                        <input type="text" class="form-control" id="username" name="username"
+                               placeholder="Introduce tu usuario">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="exampleInputPassword1">🔒 Contraseña</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password"
+                               placeholder="Contraseña">
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

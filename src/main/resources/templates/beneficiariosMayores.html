@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Beneficiarios Mayores</title>
+    <div th:replace="fragments/init.html"></div>
+</head>
+
+<body>
+<header th:replace="fragments/header.html"></header>
+
+<div class="container mt-4 p-4 rounded shadow" style="background-color: #f4f6f8;">
+    <h2 class="text-center text-success mb-4">👵 Listado Beneficiarios MAYORES</h2>
+
+    <div class="mb-3">
+        <a class="btn btn-outline-secondary" href="/">⬅ Atrás</a>
+    </div>
+
+    <form th:action="@{/beneficiariosMayores}" method="get" class="input-group mb-4">
+        <input class="form-control" type="search" name="query" th:value="${query}" placeholder="Buscar por nombre, apellido" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">🔍 Buscar</button>
+    </form>
+
+    <table class="table table-bordered table-hover table-striped text-center align-middle">
+        <thead class="table-success">
+        <tr>
+            <th>Expediente</th>
+            <th>Nombre Beneficiario</th>
+            <th>Parentesco</th>
+            <th>Fecha Nacimiento</th>
+            <th>Edad</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="beneficiario : ${beneficiarios}">
+            <td th:text="'#'">Expediente</td>
+            <td th:text="${beneficiario.nombreBeneficiario + ' ' + beneficiario.apellidoBeneficiario + ' (tomador: ' + beneficiario.nombreTomador + ' ' + beneficiario.apellidoTomador + ')'}">Nombre</td>
+            <td th:text="${T(com.t2kat.annur.util.Utilidades).getParentesco(beneficiario.parentesco)}">Parentesco</td>
+            <td th:text="${#temporals.format(beneficiario.fechaNacimiento, 'dd/MM/yyyy')}">Fecha</td>
+            <td th:text="${@utilidades.calcularEdad(beneficiario.fechaNacimiento)}">Edad</td>
+            <td><a class="btn btn-warning btn-sm" th:href="${'/beneficiario/edit/' + beneficiario.id}">✏️ Editar</a></td>
+            <td><a class="btn btn-danger btn-sm" th:href="${'/beneficiario/delete/' + beneficiario.id+'/'+beneficiario.tomadorId}">🗑️ Eliminar</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Navegación de páginas -->
+    <nav aria-label="Paginación">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" th:classappend="${!beneficiarios.hasPrevious()} ? 'disabled'" th:href="@{/beneficiariosMayores(query=${query}, page=0, size=${beneficiarios.size})}">« Primera</a>
+            </li>
+            <li class="page-item" th:if="${beneficiarios.hasPrevious()}">
+                <a class="page-link" th:href="@{/beneficiariosMayores(query=${query}, page=${beneficiarios.number - 1}, size=${beneficiarios.size})}">‹ Anterior</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Página <span th:text="${beneficiarios.number + 1}"></span> de <span th:text="${beneficiarios.totalPages}"></span></span>
+            </li>
+            <li class="page-item" th:if="${beneficiarios.hasNext()}">
+                <a class="page-link" th:href="@{/beneficiariosMayores(query=${query}, page=${beneficiarios.number + 1}, size=${beneficiarios.size})}">Siguiente ›</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:classappend="${!beneficiarios.hasNext()} ? 'disabled'" th:href="@{/beneficiariosMayores(query=${query}, page=${beneficiarios.totalPages - 1}, size=${beneficiarios.size})}">Última »</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>

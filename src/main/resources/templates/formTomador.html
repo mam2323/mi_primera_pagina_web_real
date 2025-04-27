@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Formulario Tomador</title>
+        <div th:include="fragments/init.html"></div>
+</head>
+
+<body>
+<header th:include="fragments/header.html"></header>
+
+<div class="container mt-4 p-4 rounded shadow" style="background-color: #fff7e6;">
+        <h2 class="text-center text-primary mb-4">  Tomador</h2>
+
+        <div class="mb-3 text-end">
+                <a class="btn btn-outline-secondary" href="/">⬅ Atrás</a>
+        </div>
+
+        <form th:object="${tomador}" th:action="@{/tomador}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="row g-3">
+                        <div class="col-md-3">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre" th:field="*{nombre}" required>
+                        </div>
+                        <div class="col-md-3">
+                                <label for="apellido">Apellido</label>
+                                <input type="text" class="form-control" id="apellido" placeholder="Apellido" th:field="*{apellido}" >
+                        </div>
+                        <div class="col-md-3">
+                                <label for="dni">DNI / NIE / PASAPORTE</label>
+                                <input type="text" class="form-control" id="dni" placeholder="Documento identidad" th:field="*{identificacion}" required>
+                        </div>
+                        <div class="col-md-3">
+                                <label for="fechaNacimiento">Fecha Nacimiento</label>
+                                <input type="date" class="form-control" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+                        </div>
+                </div>
+
+                <div class="row g-3 mt-2">
+                        <div class="col-md-2">
+                                <label for="genero">Género</label>
+                                <select id="genero" class="form-select" th:field="*{genero}">
+                                        <option value="-1">Elegir...</option>
+                                        <option value="1">Hombre</option>
+                                        <option value="2">Mujer</option>
+                                </select>
+                        </div>
+                        <div class="col-md-2">
+                                <label for="estadoCivil">Estado Civil</label>
+                                <select id="estadoCivil" class="form-select" th:field="*{civil}">
+                                        <option value="-1" disabled selected>Seleccione una opción</option>
+                                        <option value="1">SOLTERO/A</option>
+                                        <option value="2">CASADO/A</option>
+                                        <option value="3">DIVORCIADO/A</option>
+                                        <option value="4">VIUDO/A</option>
+                                </select>
+                        </div>
+                        <div class="col-md-4">
+                                <label for="direccion">Dirección</label>
+                                <input type="text" class="form-control" id="direccion" th:field="*{direccion}" required>
+                        </div>
+                        <div class="col-md-4">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono" th:field="*{telefono}">
+                        </div>
+                </div>
+
+                <div class="row g-3 mt-2">
+                        <div class="col-md-4">
+                                <label for="email">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="email" th:field="*{correo}" >
+                        </div>
+                        <div class="col-md-2">
+                                <label for="expediente">Expediente</label>
+                                <input type="text" class="form-control" id="expediente" th:field="*{expediente}">
+                        </div>
+                        <!-- Fecha Inicio -->
+                        <div class="col-md-3">
+                                <label for="fechaInicio">Fecha Inicio</label>
+                                <input type="date" class="form-control" id="fechaInicio" th:field="*{fechaInicio}">
+                        </div>
+
+                        <!-- Fecha Fin -->
+                        <div class="col-md-3">
+                                <label for="fechaFin">Fecha Fin</label>
+                                <input type="date" class="form-control" id="fechaFin" th:field="*{fechaFin}">
+                        </div>
+
+                </div>
+
+                <div class="row g-3 mt-2">
+                        <div class="col-md-4">
+                                <label for="precios">Precio</label>
+                                <select id="precios" class="form-select" th:field="*{tasas}">
+                                        <option value="-1" disabled selected>Seleccione precio</option>
+                                        <option th:each="precio : ${#numbers.sequence(50, 1000, 50)}" th:value="${precio}" th:text="${precio + ' €'}"></option>
+                                </select>
+                        </div>
+                        <div class="col-md-8">
+                                <label for="observacion">Observación</label>
+                                <textarea class="form-control" id="observacion" placeholder="Observación..." th:field="*{observacion}"></textarea>
+                        </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-primary me-2">💾 Guardar Tomador</button>
+                        <a href="/" class="btn btn-danger">❌ Cancelar</a>
+                </div>
+        </form>
+</div>
+
+</body>
+</html>

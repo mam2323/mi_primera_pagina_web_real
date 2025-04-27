@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<div th:include="fragments/init.html"></div>
+<title>Formulario Beneficiario</title>
+
+<body>
+<header th:include="fragments/header.html"></header>
+
+<div class="container mt-5">
+        <div class="card shadow-lg p-4 rounded">
+                <h2 class="text-center text-primary mb-4">➕ Añadir Nuevo Beneficiario</h2>
+
+                <div class="mb-3">
+                        <a class="btn btn-dark btn-sm" href="/">← Atrás</a>
+                </div>
+
+
+                <form th:object="${beneficiario}" th:action="@{/beneficiario}" method="post">
+                        <input type="hidden" th:field="*{tomadorId}">
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="row">
+                                <div class="form-group col-md-3">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" th:field="*{nombreBeneficiario}">
+                                </div>
+                                <div class="form-group col-md-3">
+                                        <label for="apellido">Apellido</label>
+                                        <input type="text" class="form-control" id="apellido" placeholder="Apellido" th:field="*{apellidoBeneficiario}">
+                                </div>
+                                <div class="form-group col-md-3">
+                                        <label for="parentesco">Parentesco</label>
+                                        <select id="parentesco" class="form-control" th:field="*{parentesco}">
+                                                <option value="-1" disabled selected>Seleccione parentesco</option>
+                                                <option value="1">CONYUGUE</option>
+                                                <option value="2">HIJO MENOR DE EDAD</option>
+                                                <option value="3">HIJA SOLTERA</option>
+                                                <option value="4">PADRE/MADRE</option>
+                                        </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                        <label for="fechaNacimiento">Fecha Nacimiento</label>
+                                        <input type="date" class="form-control" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+                                </div>
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">✅ Guardar Beneficiario</button>
+                                <a href="/" class="btn btn-danger">❌ Cancelar</a>
+                        </div>
+                </form>
+        </div>
+</div>
+
+</body>
+</html>
